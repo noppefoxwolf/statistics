@@ -1,8 +1,7 @@
  // Playground - noun: a place where people can play
- 
- import UIKit
- 
- //csvデータの定義
+
+import UIKit
+
  let numbers : [ Int ] =
     [148,78,41,
     160,86,49,
@@ -25,11 +24,10 @@
     150,79,43,
     139,74,31]
  
- //各変数の定義
  var xArray:[Int]=[];
  var yArray:[Int]=[];
  var zArray:[Int]=[];
- //各変数配列への代入
+ 
  for i in 0...numbers.count-1 {
     if i%3==0 {
         xArray.append(numbers[i])
@@ -81,5 +79,5 @@
  print("問3.1.3.x = >\(standardDeviation(xArray))")
  print("問3.1.3.y = >\(standardDeviation(yArray))")
  print("問3.1.3.z = >\(standardDeviation(zArray))")
+
  
-  
