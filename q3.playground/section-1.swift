@@ -1,8 +1,8 @@
  // Playground - noun: a place where people can play
+import Foundation
 
-import UIKit
-
- let numbers : [ Int ] =
+ //---init----
+let numbers : [ Int ] =
     [148,78,41,
     160,86,49,
     159,86,45,
@@ -38,6 +38,7 @@ import UIKit
     }
  }
  
+ //---method---
  //平均
  func average(data:[Int])->Double{
     var result:Double = 0.0;
@@ -50,7 +51,7 @@ import UIKit
  //平方和
  func sumOfSquares(data:[Int])->Double{
     var result:Double = 0.0;
-    var ave:Double = average(data)
+    let ave:Double = average(data)
     for num in data {
         result += pow(Double(num)-ave, Double(2))
     }
@@ -62,11 +63,32 @@ import UIKit
     return sumOfSquares(data)/Double(data.count-1)
  }
  
+ //共分散
+ func covariance(data1:[Int],data2:[Int])->Double{
+    return sumOfProducts(data1, data2)/Double(data1.count-1)
+ }
+ 
+ //積和
+ func sumOfProducts (data1:[Int],data2:[Int])->Double{
+    var result:Double = 0.0;
+    let ave1:Double = average(data1)
+    let ave2:Double = average(data2)
+    for i in 0...data1.count-1 {
+        let num1:Double = Double(data1[i])
+        let num2:Double = Double(data2[i])
+        result += (num1-ave1)*(num2-ave2)
+    }
+    return result;
+ }
+ 
  //標準偏差
  func standardDeviation(data:[Int])->Double{
     return sqrt(variance(data))
  }
  
+ //----answer---
+ 
+ //問1
  //各変数の平均
  print("問3.1.1.x = >\(average(xArray))")
  print("問3.1.1.y = >\(average(yArray))")
@@ -79,5 +101,27 @@ import UIKit
  print("問3.1.3.x = >\(standardDeviation(xArray))")
  print("問3.1.3.y = >\(standardDeviation(yArray))")
  print("問3.1.3.z = >\(standardDeviation(zArray))")
+ 
+ //問2
+ let b:Double = covariance(xArray,zArray)/variance(xArray)
+ print("問3.2 b = \(b)")
+ print("問3.2 a = \(average(zArray) - (b * average(xArray)))")
+ 
+ //問3
+ let n = Double(xArray.count);
+ let Sxx = sumOfSquares(xArray) - (n * pow(average(xArray), Double(2)))
+ let Syy = sumOfSquares(yArray) - (n * pow(average(yArray), Double(2)))
+ let Sxy = sumOfProducts(xArray, yArray) - (n * average(xArray) * average(yArray))
+ let Szz = sumOfSquares(zArray) - (n * pow(average(zArray), Double(2)))
+ let Sxz = sumOfProducts(xArray, zArray) - (n * average(xArray) * average(zArray))
+ let Syz = sumOfProducts(yArray, zArray) - (n * average(yArray) * average(zArray))
+ 
 
+ let b1 = ((Sxz*Syy) - (Syz * Sxy))/((Sxx * Syy) - pow(Sxy, Double(2)))
+ let b2 = ((Syz*Sxx) - (Sxz * Sxy))/((Sxx * Syy) - pow(Sxy, Double(2)))
+ let b0 = average(zArray) - b1 * average(xArray) - b2 * average(yArray)
+ 
+ print("問3.3 b0 = \(b0)")
+ print("問3.3 b1 = \(b1)")
+ print("問3.3 b2 = \(b2)")
  
